@@ -51,23 +51,27 @@ http://localhost:3000/
 
 8. API References
 Registar novo usuário
-```json
+```html
 POST /api/auth/register
+```
+```json
 {
   "name": "Usuario Teste",
   "email": "teste@email.com",
   "password": "senhaSegura123"
 }
-
+```
 
 Fazer login
-```json
+```html
 POST /api/auth/register
+```
+```json
 {
   "email": "teste@example.com",
   "password": "123456"
 }
-
+```
 
 ## Folder struture
 
