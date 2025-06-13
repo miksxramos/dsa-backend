@@ -1,20 +1,22 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const cors = require('cors');
+// src/app.js
+import dotenv from 'dotenv';
+dotenv.config();
 
-const authRoutes = require('./routes/authRoutes');
+import express from 'express';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
+import cors from 'cors';
 
-const app = express();
+import authRoutes from './routes/authRoutes.js';
+import apiRoutes from './routes/apiRoutes.js';
 
-// Middleware
+const app = express(); // ⬅️ IMPORTANTE: precisa vir antes de usar app.*
+
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-
-// Conexão com o MongoDB
+// Conexão com MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   auth: {
     username: process.env.MONGO_USER,
@@ -27,11 +29,9 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('Conectado ao MongoDB com sucesso!'))
 .catch(err => {
   console.error('Erro na conexão com MongoDB:', err.message);
-  console.error('Stack trace:', err.stack);
 });
 
-  
-// Rota raiz
+// Rota de boas-vindas
 app.get('/', (req, res) => {
   res.json({
     message: 'Bem-vindo à API de autenticação',
@@ -42,9 +42,9 @@ app.get('/', (req, res) => {
   });
 });
 
-
-// Rotas da API
-app.use('/api/auth', authRoutes);
+// Rotas da aplicação
+app.use('/api', apiRoutes);        // rotas gerais da API
+app.use('/api/auth', authRoutes);  // rotas de autenticação
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

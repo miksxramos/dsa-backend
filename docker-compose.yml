@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   backend:
     build: ./backend
@@ -7,8 +9,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-      - MONGO_URI=mongodb://mongo:27017/auth_db
-      - JWT_SECRET=seuSegredoSuperSecreto
+      - MONGO_URI=mongodb://app_user:app_password@mongo:27017/auth_db?authSource=auth_db
+      - JWT_SECRET=prefiroQueijadasDeSintra
     depends_on:
       - mongo
     networks:
@@ -21,16 +23,16 @@ services:
     image: mongo:latest
     container_name: mongo_db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=senhaadmin
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password_ppi
       - MONGO_INITDB_DATABASE=auth_db
-      - MONGO_INITDB_USERNAME=app_user
-      - MONGO_INITDB_PASSWORD=app_password
     networks:
       - dsa-network
     volumes:
       - mongodb_data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - "27017:27017"
 
 networks:
   dsa-network:
