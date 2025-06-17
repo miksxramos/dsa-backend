@@ -3,6 +3,7 @@ import express from 'express';
 const router = express.Router();
 
 // Sub-rotas reais
+import userRoutes from './userRoutes.js';
 import messageRoutes from './messageRoutes.js';
 import notificationRoutes from './notificationRoutes.js';
 import scheduleRoutes from './scheduleRoutes.js';
@@ -11,6 +12,8 @@ import scheduleRoutes from './scheduleRoutes.js';
 router.use('/messages', messageRoutes);
 router.use('/notifications', notificationRoutes);
 router.use('/schedules', scheduleRoutes);
+router.use('/users', userRoutes); // agora permite GET /api/users/:id
+
 
 // Rotas adicionais (mantidas por ti — podem usar lógica real depois)
 

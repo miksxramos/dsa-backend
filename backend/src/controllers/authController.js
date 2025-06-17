@@ -22,6 +22,7 @@ const authController = {
     });
 
     user.password = undefined; // não enviar de volta
+    
 
     res.status(201).json({ user });
   } catch (error) {
